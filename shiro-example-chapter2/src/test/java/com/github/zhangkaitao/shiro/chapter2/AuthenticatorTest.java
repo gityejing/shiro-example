@@ -25,13 +25,13 @@ import org.junit.Test;
  */
 public class AuthenticatorTest {
 
-    @Test
+    @Test // 测试必须所有的认证都通过了，才算是成功了
     public void testAllSuccessfulStrategyWithSuccess() {
         login("classpath:shiro-authenticator-all-success.ini");
         Subject subject = SecurityUtils.getSubject();
-
-        //得到一个身份集合，其包含了Realm验证成功的身份信息
+        // 得到一个身份集合，其包含了Realm验证成功的身份信息
         PrincipalCollection principalCollection = subject.getPrincipals();
+        System.out.println(principalCollection.asList().size());
         Assert.assertEquals(2, principalCollection.asList().size());
     }
 
@@ -82,8 +82,7 @@ public class AuthenticatorTest {
 
     private void login(String configFile) {
         //1、获取SecurityManager工厂，此处使用Ini配置文件初始化SecurityManager
-        Factory<org.apache.shiro.mgt.SecurityManager> factory =
-                new IniSecurityManagerFactory(configFile);
+        Factory<org.apache.shiro.mgt.SecurityManager> factory = new IniSecurityManagerFactory(configFile);
 
         //2、得到SecurityManager实例 并绑定给SecurityUtils
         org.apache.shiro.mgt.SecurityManager securityManager = factory.getInstance();

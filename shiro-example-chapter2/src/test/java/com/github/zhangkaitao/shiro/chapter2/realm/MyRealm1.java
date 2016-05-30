@@ -22,9 +22,11 @@ public class MyRealm1 implements Realm {
         return token instanceof UsernamePasswordToken; //仅支持UsernamePasswordToken类型的Token
     }
 
+
+    // 登录验证,抛出异常表示认证失败;
+    // 没有抛出异常表示认证成功
     @Override
     public AuthenticationInfo getAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
         String username = (String)token.getPrincipal();  //得到用户名
         String password = new String((char[])token.getCredentials()); //得到密码
         if(!"zhang".equals(username)) {
